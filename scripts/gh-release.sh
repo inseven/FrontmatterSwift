@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2024-2026 Jason Morley
+# Copyright (c) 2021-2026 Jason Morley
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,16 @@
 set -e
 set -o pipefail
 set -x
-set -u
 
-SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-ROOT_DIRECTORY="${SCRIPTS_DIRECTORY}/.."
-CHANGES_DIRECTORY="${SCRIPTS_DIRECTORY}/changes"
+# Actually make the release.
+FLAGS=()
+if $CHANGES_INITIAL_DEVELOPMENT ; then
+    FLAGS+=("--prerelease")
+fi
+gh release create "$CHANGES_TAG" --title "$CHANGES_TITLE" --notes-file "$CHANGES_NOTES_FILE" "${FLAGS[@]}"
 
-ENVIRONMENT_PATH="${SCRIPTS_DIRECTORY}/environment.sh"
-
-source "$ENVIRONMENT_PATH"
-
-# Install the Python dependencies
-PIPENV_PIPFILE="$CHANGES_DIRECTORY/Pipfile" pipenv install
+# Upload the attachments.
+for attachment in "$@"
+do
+    gh release upload "$CHANGES_TAG" "$attachment"
+done
