@@ -20,12 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-SCRIPTS_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-ROOT_DIRECTORY="${SCRIPTS_DIRECTORY}/.."
-CHANGES_DIRECTORY="${SCRIPTS_DIRECTORY}/changes"
-CHANGES_SCRIPT="${CHANGES_DIRECTORY}/changes"
-RELEASE_SCRIPT="${CHANGES_DIRECTORY}/examples/gh-release.sh"
+ROOT_DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd )"
+SCRIPTS_DIRECTORY="$ROOT_DIRECTORY/scripts"
+CHANGES_DIRECTORY="$SCRIPTS_DIRECTORY/changes"
+CHANGES_SCRIPT="$CHANGES_DIRECTORY/changes"
+RELEASE_SCRIPT="$SCRIPTS_DIRECTORY/gh-release.sh"
 
-source "${SCRIPTS_DIRECTORY}/environment.sh"
+source "$SCRIPTS_DIRECTORY/environment.sh"
 
-changes --verbose release --skip-if-empty --push --command "\"${RELEASE_SCRIPT}\"" "\"$@\""
+changes --verbose release --skip-if-empty --push --command "\"$RELEASE_SCRIPT\"" "\"$@\""
