@@ -11,7 +11,7 @@ let package = Package(
             targets: ["FrontmatterSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/inseven/licensable", from: "0.0.13"),
+        .package(url: "https://github.com/inseven/licensable", from: "0.1.0"),
         .package(url: "https://github.com/jpsim/Yams.git", from: "6.2.2"),
     ],
     targets: [
